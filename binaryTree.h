@@ -45,7 +45,17 @@ class binaryTree
 		}
 		void printTree()
 		{
-		
+			printTree(head);
+			cout << endl;
+		}
+		void printTree(Node* root)
+		{
+			if(root == NULL)
+				return;
+			
+			printTree(root->right);
+			cout << root->data << " ";
+			printTree(root->left);
 		}
 		int findDepth()
 		{
