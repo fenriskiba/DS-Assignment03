@@ -20,15 +20,22 @@ class binaryTree
 		{
 			head = NULL;
 		}
-		Node* findNode(int search)
+		Node* findNode(int search, Node* root = head)
 		{
-		
+			if(root == NULL)
+				return NULL;
+			if(root.data == search)
+				return root;
+			if(root.data > search)
+				return findNode(search, root.left)
+			if(root.data < search)
+				return findNode(search, root.right)
 		}
 		void insertNode(int newValue)
 		{
 		
 		}
-		void deleteNode(int delNode)
+		void deleteNode(Node* delNode)
 		{
 		
 		}
