@@ -20,16 +20,16 @@ class binaryTree
 		{
 			head = NULL;
 		}
-		Node* findNode(int search)
+		bool findNode(int search)
 		{
 			return findNode(search, head);
 		}
-		Node* findNode(int search, Node* root)
+		bool findNode(int search, Node* root)
 		{
 			if(root == NULL)
-				return NULL;
+				return false;
 			if(root->data == search)
-				return root;
+				return true;
 			if(root->data > search)
 				return findNode(search, root->left);
 			if(root->data < search)
@@ -39,7 +39,7 @@ class binaryTree
 		{
 		
 		}
-		void deleteNode(Node* delNode)
+		void deleteNode(int delValue)
 		{
 		
 		}
