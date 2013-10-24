@@ -37,7 +37,38 @@ class binaryTree
 		}
 		void insertNode(int newValue)
 		{
-		
+			Node* newNode = new Node;
+			newNode->data = newValue;
+			
+			if(head == NULL)
+			{
+				head = newNode;
+			}
+			else
+			{
+				insertNode(head, newNode);
+			}
+		}
+		void insertNode(Node* root, Node* newNode)
+		{
+			if(root->data == newNode->data)
+			{
+				delete newNode;
+			}
+			else if(root->data > newNode->data)
+			{
+				if(root->left == NULL)
+					root->left = newNode;
+				else
+					insertNode(root->left, newNode);
+			}
+			else
+			{
+				if(root->right == NULL)
+					root->right = newNode;
+				else
+					insertNode(root->right, newNode);
+			}
 		}
 		void deleteNode(int delValue)
 		{
