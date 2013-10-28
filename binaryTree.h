@@ -43,7 +43,7 @@ class binaryTree
 			if(head == NULL)
 			{
 				head = newNode;
-				cout << "Inserted Successfully\n";
+				cout << "Inserted Successfully\n\n";
 			}
 			else
 			{
@@ -55,14 +55,14 @@ class binaryTree
 			if(root->data == newNode->data)
 			{
 				delete newNode;
-				cout << "That value is already on the tree.\n";
+				cout << "That value is already on the tree.\n\n";
 			}
 			else if(root->data > newNode->data)
 			{
 				if(root->left == NULL)
 				{
 					root->left = newNode;
-					cout << "Inserted Successfully\n";
+					cout << "Inserted Successfully\n\n";
 				}
 				else
 					insertNode(root->left, newNode);
@@ -72,7 +72,7 @@ class binaryTree
 				if(root->right == NULL)
 				{
 					root->right = newNode;
-					cout << "Inserted Successfully\n";
+					cout << "Inserted Successfully\n\n";
 				}
 				else
 					insertNode(root->right, newNode);
