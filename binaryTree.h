@@ -231,7 +231,22 @@ class binaryTree
 		}
 		int largestCost()
 		{
-		
+			return largestCost(head);
+		}
+		int largestCost(Node* root)
+		{
+			int rightCost = 0;
+			int leftCost = 0;
+			
+			if(root->left != NULL)
+				leftCost = largestCost(root->left);
+			if(root->right != NULL)
+				rightCost = largestCost(root->right);
+			
+			if(rightCost > leftCost)
+				return (rightCost + root->data);
+			else
+				return (leftCost + root->data);
 		}
 		bool isBalanced()
 		{
