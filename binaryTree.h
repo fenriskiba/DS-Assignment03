@@ -1,6 +1,8 @@
 #ifndef BINARY_TREE
 #define BINARY_TREE
 
+#include <cmath>
+
 using namespace std;
 
 struct Node
@@ -14,12 +16,31 @@ class binaryTree
 {
 	private:
 		Node* head;
+		
 		Node* smallestOnRight(Node* root)
 		{
 			if(root->left == NULL)
 				return root;
 			
 			return smallestOnRight(root->left);
+		}
+		int height(Node* root)
+		{
+			int leftHeight;
+			int rightHeight;
+			
+			if(root == NULL)
+				return -1;
+			else
+			{
+				leftHeight = height(root->left);
+				rightHeight = height(root->right);
+				
+				if(leftHeight > rightHeight)
+					return leftHeight + 1;
+				else
+					return rightHeight + 1;
+			}
 		}
 	
 	public:
@@ -250,7 +271,29 @@ class binaryTree
 		}
 		bool isBalanced()
 		{
-		
+			return isBalanced(head);
+		}
+		bool isBalanced(Node* root)
+		{
+			bool leftBalanced = true;
+			bool rightBalanced = true;
+			int leftHeight;
+			int rightHeight;
+			
+			if(root->left != NULL)
+				leftBalanced = isBalanced(root->left);
+			if(root->right != NULL)
+				rightBalanced = isBalanced(root->right);
+				
+			if(!leftBalanced || !rightBalanced)
+				return false;
+			
+			leftHeight = height(root->left);
+			rightHeight = height(root->right);
+			
+			if(abs(leftHeight - rightHeight) > 1)
+				return false;
+			return true;
 		}
 };
 
