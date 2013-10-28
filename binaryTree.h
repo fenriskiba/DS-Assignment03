@@ -157,9 +157,21 @@ class binaryTree
 			cout << root->data << " ";
 			printTree(root->left);
 		}
-		int findDepth(int value)
+		int findDepth(int search)
 		{
-		
+			return findDepth(search, -1, head); 
+		}
+		int findDepth(int search, int current, Node* root)
+		{
+			current++;
+			if(root == NULL)
+				return -1;
+			if(root->data == search)
+				return current;
+			if(root->data > search)
+				return findDepth(search, current, root->left);
+			if(root->data < search)
+				return findDepth(search, current, root->right);
 		}
 		int largestCost()
 		{
