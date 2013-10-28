@@ -43,6 +43,7 @@ class binaryTree
 			if(head == NULL)
 			{
 				head = newNode;
+				cout << "Inserted Successfully\n";
 			}
 			else
 			{
@@ -54,18 +55,25 @@ class binaryTree
 			if(root->data == newNode->data)
 			{
 				delete newNode;
+				cout << "That value is already on the tree.\n";
 			}
 			else if(root->data > newNode->data)
 			{
 				if(root->left == NULL)
+				{
 					root->left = newNode;
+					cout << "Inserted Successfully\n";
+				}
 				else
 					insertNode(root->left, newNode);
 			}
 			else
 			{
 				if(root->right == NULL)
+				{
 					root->right = newNode;
+					cout << "Inserted Successfully\n";
+				}
 				else
 					insertNode(root->right, newNode);
 			}
@@ -77,14 +85,16 @@ class binaryTree
 			
 			return findSmallest(root->left);
 		}
-		void deleteNode(int delValue)
+		bool deleteNode(int delValue)
 		{
 			if(head == NULL)
-				return;
+			{
+				return false;
+			}
 			
 			deleteNode(delValue, head);
 		}
-		void deleteNode(int delValue, Node* root)
+		bool deleteNode(int delValue, Node* root)
 		{
 			if(root->data == delValue)
 			{
@@ -92,18 +102,21 @@ class binaryTree
 				{
 					delete root;
 					root = NULL;
+					return true;
 				}
 				else if(root->left == NULL && root->right != NULL)
 				{
 					Node* temp = root->right;
 					delete root;
 					root = temp;
+					return true;
 				}
 				else if(root->left != NULL && root->right == NULL)
 				{
 					Node* temp = root->left;
 					delete root;
 					root = temp;
+					return true;
 				}
 				else
 				{
@@ -112,19 +125,20 @@ class binaryTree
 					root->data = temp->data;
 					deleteNode(temp->data, temp);
 					temp = NULL;
+					return true;
 				}
 			}
 			else if(root->data > delValue)
 			{
 				if(root->left == NULL)
-					return;
+					return false;
 				else
 					deleteNode(delValue, root->left);
 			}
 			else
 			{
 				if(root->right == NULL)
-					return;
+					return false;
 				else
 					deleteNode(delValue, root->right);
 			}
@@ -143,7 +157,7 @@ class binaryTree
 			cout << root->data << " ";
 			printTree(root->left);
 		}
-		int findDepth()
+		int findDepth(int value)
 		{
 		
 		}
