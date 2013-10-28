@@ -138,7 +138,7 @@ class binaryTree
 				{
 					temp = smallestOnRight(head->right);
 					head->data = temp->data;
-					deleteNode(head->data, head->right);
+					deleteNode(head->data, head);
 					return true;
 				}
 			}
@@ -211,7 +211,7 @@ class binaryTree
 				{
 					temp = smallestOnRight(delNode->right);
 					delNode->data = temp->data;
-					deleteNode(delNode->data, delNode->right);
+					deleteNode(delNode->data, delNode);
 					return true;
 				}
 			}
