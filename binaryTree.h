@@ -14,6 +14,13 @@ class binaryTree
 {
 	private:
 		Node* head;
+		Node* smallestOnRight(Node* root)
+		{
+			if(root->left == NULL)
+				return root;
+			
+			return smallestOnRight(root->left);
+		}
 	
 	public:
 		binaryTree()
@@ -78,69 +85,118 @@ class binaryTree
 					insertNode(root->right, newNode);
 			}
 		}
-		Node* findSmallest(Node* root)
-		{
-			if(root->left == NULL)
-				return root;
-			
-			return findSmallest(root->left);
-		}
 		bool deleteNode(int delValue)
 		{
+			Node* temp;
 			if(head == NULL)
-			{
 				return false;
-			}
 			
-			deleteNode(delValue, head);
-		}
-		bool deleteNode(int delValue, Node* root)
-		{
-			if(root->data == delValue)
+			if(head->data == delValue)
 			{
-				if(root->left == NULL && root->right == NULL)
+				if(head->right == NULL && head->left == NULL)//No Child
 				{
-					delete root;
-					root = NULL;
+					delete head;
+					head = NULL;
 					return true;
 				}
-				else if(root->left == NULL && root->right != NULL)
+				else if(head->right == NULL && head->left != NULL)//Left Child
 				{
-					Node* temp = root->right;
-					delete root;
-					root = temp;
+					temp = head;
+					head = head->left;
+					delete temp;
 					return true;
 				}
-				else if(root->left != NULL && root->right == NULL)
+				else if(head->right != NULL && head->left == NULL)//Right Child
 				{
-					Node* temp = root->left;
-					delete root;
-					root = temp;
+					temp = head;
+					head = head->right;
+					delete temp;
 					return true;
 				}
-				else
+				else //Two Children
 				{
-					Node* temp;
-					temp = findSmallest(root->right);
-					root->data = temp->data;
-					deleteNode(temp->data, temp);
-					temp = NULL;
+					temp = smallestOnRight(head->right);
+					head->data = temp->data;
+					deleteNode(head->data, head->right);
 					return true;
 				}
-			}
-			else if(root->data > delValue)
-			{
-				if(root->left == NULL)
-					return false;
-				else
-					deleteNode(delValue, root->left);
 			}
 			else
 			{
-				if(root->right == NULL)
-					return false;
-				else
-					deleteNode(delValue, root->right);
+				return deleteNode(delValue, head);
+			}
+		}
+		bool deleteNode(int delValue, Node* root)
+		{
+			Node* delNode;
+			Node* temp;
+			
+			if(root->data > delValue)
+				delNode = root->left;
+			else
+				delNode = root->right;
+			
+			if(delNode == NULL)
+				return false;
+			
+			if(delNode->data == delValue)
+			{
+				if(delNode->left == NULL && delNode->right == NULL)//No Children
+				{
+					if(delNode == root->left)
+					{
+						root->left = NULL;
+						delete delNode;
+						return true;
+					}
+					else
+					{
+						root->right = NULL;
+						delete delNode;
+						return true;
+					}
+				}
+				else if(delNode->left == NULL && delNode->right != NULL)//Right Child
+				{
+					if(delNode == root->left)
+					{
+						root->left = delNode->right;
+						delete delNode;
+						return true;
+					}
+					else
+					{
+						root->right = delNode->right;
+						delete delNode;
+						return true;
+					}
+				}
+				else if(delNode->left != NULL && delNode->right == NULL)//Left Child
+				{
+					if(delNode == root->left)
+					{
+						root->left = delNode->left;
+						delete delNode;
+						return true;
+					}
+					else
+					{
+						root->right = delNode->left;
+						delete delNode;
+						return true;
+					}
+				}
+				else //Two Children
+				{
+					temp = smallestOnRight(delNode->right);
+					delNode->data = temp->data;
+					deleteNode(delNode->data, delNode->right);
+					return true;
+				}
+			}
+			else
+			{
+				return deleteNode(delValue, delNode);
 			}
 		}
 		void printTree()
