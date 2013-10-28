@@ -70,9 +70,64 @@ class binaryTree
 					insertNode(root->right, newNode);
 			}
 		}
+		Node* findSmallest(Node* root)
+		{
+			if(root->left == NULL)
+				return root;
+			
+			return findSmallest(root->left);
+		}
 		void deleteNode(int delValue)
 		{
-		
+			if(head == NULL)
+				return;
+			
+			deleteNode(delValue, head);
+		}
+		void deleteNode(int delValue, Node* root)
+		{
+			if(root->data == delValue)
+			{
+				if(root->left == NULL && root->right == NULL)
+				{
+					delete root;
+					root = NULL;
+				}
+				else if(root->left == NULL && root->right != NULL)
+				{
+					Node* temp = root->right;
+					delete root;
+					root = temp;
+				}
+				else if(root->left != NULL && root->right == NULL)
+				{
+					Node* temp = root->left;
+					delete root;
+					root = temp;
+				}
+				else
+				{
+					Node* temp;
+					temp = findSmallest(root->right);
+					root->data = temp->data;
+					deleteNode(temp->data, temp);
+					temp = NULL;
+				}
+			}
+			else if(root->data > delValue)
+			{
+				if(root->left == NULL)
+					return;
+				else
+					deleteNode(delValue, root->left);
+			}
+			else
+			{
+				if(root->right == NULL)
+					return;
+				else
+					deleteNode(delValue, root->right);
+			}
 		}
 		void printTree()
 		{
